@@ -18,8 +18,12 @@ pub trait WordleGame {
         let args = Args::parse();
         io::stdin().read_line(&mut input_word)?;
         while(){
-            if(!gameInfo.acceptableSet.contains(&input_word))
-            CheckWord();
+            if !gameInfo.acceptableSet.contains(&input_word) {
+                CheckWord();
+            }
+            else{
+
+            }
         }
         wordle_end();
     }
@@ -64,6 +68,7 @@ pub struct WordleGameNotTty {
 impl WordleGame for WordleGameNotTty {
 }
 
+/*
     print!("{}", console::style("Your name: ").bold().red());
     io::stdout().flush().unwrap();
 
@@ -77,3 +82,4 @@ impl WordleGame for WordleGameNotTty {
         print!("{} ", arg);+
     }
     println!("");
+*/
