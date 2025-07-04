@@ -1,8 +1,9 @@
 [package]
 name = "wordle"
+author = "Allan"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-console
-atty
+atty = "0.2.14"
+console = "0.15.7"

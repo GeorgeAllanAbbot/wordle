@@ -1,33 +1,34 @@
-use console;
-use std::io::{self, Write};
+// main.rs
+mod wordle_game;
+use wordle_game::wordle_game_tty;
+use wordle_game::wordle_game_not_tty;
+use std::io;
 
-/// The main function for the Wordle game, implement your own logic here
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let is_tty = atty::is(atty::Stream::Stdout);
-
+// 根据是否是终端创建合适的游戏实例
+pub fn create_game(config: GameConfig,is_tty: bool) -> Box<dyn WordleGame> {
     if is_tty {
-        println!(
-            "I am in a tty. Please print {}!",
-            console::style("colorful characters").bold().blink().blue()
-        );
+        Box::new(WordleGameTty(config))
     } else {
-        println!("I am not in a tty. Please print according to test requirements!");
+        Box::new(WordleGameNotTty(config))
     }
+}
 
-    if is_tty {
-        print!("{}", console::style("Your name: ").bold().red());
-        io::stdout().flush().unwrap();
+/// 主函数
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // 端检测
+    let is_tty = atty::is(atty::Stream::Stdout);
+    // 数据
+    let config = GameConfig {
+        ..GameConfig::default()
+    };
+    // 创建游戏主体
+    let mut wordle_game_main = create_game(config,is_tty);
+    
+    //运行
+    if let Err(e) = main_game_main.run(){
+        eprintln!("Errorcode:{}",e);
+        std::process::exit(1);
     }
-    let mut line = String::new();
-    io::stdin().read_line(&mut line)?;
-    println!("Welcome to wordle, {}!", line.trim());
-
-    // example: print arguments
-    print!("Command line arguments: ");
-    for arg in std::env::args() {
-        print!("{} ", arg);
-    }
-    println!("");
 
     Ok(())
 }
