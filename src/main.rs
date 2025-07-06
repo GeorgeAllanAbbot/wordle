@@ -1,4 +1,6 @@
 // main.rs
+
+// 游戏
 mod wordle_game;
 
 // 根据是否是终端创建合适的游戏实例
