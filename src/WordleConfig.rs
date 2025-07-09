@@ -53,7 +53,7 @@ impl Default for GameConfig {
         Self {
             random: default_random(),
             difficult: default_difficult(),
-            stats: false,
+            states: false,
             day: default_day(),
             seed: default_seed(),
             final_set: default_final_set(),
@@ -73,7 +73,6 @@ impl GameConfig {
         let reader = BufReader::new(file);
         let config = serde_json::from_reader(reader)
             .context("Failed to parse config JSON")?;
-        
         Ok(config)
     }
 }
