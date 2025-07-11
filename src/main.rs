@@ -2,14 +2,16 @@
 
 /// 游戏模块
 mod wordle_game;
+mod wordle_cli_args;
+mod wordle_config;
 
 
 /// 根据是否是终端创建合适的游戏实例
 pub fn create_game(is_tty: bool) -> Box<dyn wordle_game::WordleGame> {
     if is_tty {
-        Box::new(wordle_game::WordleGameTty())
+        Box::new(wordle_game::WordleGameTty::default())
     } else {
-        Box::new(wordle_game::WordleGameNotTty())
+        Box::new(wordle_game::WordleGameNotTty::default())
     }
 }
 
